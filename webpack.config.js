@@ -45,7 +45,7 @@ module.exports = {
     }]),
     new ImageminPlugin({
       disable: !isProduction,
-      test: /\.(jpe?g|png|gif|svg)$/i,
+      test: /\.(jpe?g|png|gif)$/i,
       pngquant: {
         quality: '95-100'
       }
