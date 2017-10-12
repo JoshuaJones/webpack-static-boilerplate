@@ -10,6 +10,12 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const isProduction = (process.env.NODE_ENV === 'production');
 
+// Config objects for repeated use
+const cssLoaderConfig = {
+  url: false,
+  minimize: true
+};
+
 module.exports = {
   context: path.resolve('app'),
   entry: './js/main.js',
@@ -31,8 +37,18 @@ module.exports = {
         test: /\.scss$/,
         use: (isProduction) ? ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        }) : ['style-loader', 'css-loader', 'sass-loader']
+          use: [{
+            loader: 'css-loader',
+            options: cssLoaderConfig
+          }, { loader: 'sass-loader' }]
+        }) : [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader',
+          options: cssLoaderConfig
+        }, {
+          loader: 'sass-loader'
+        }]
       }
     ]
   },
